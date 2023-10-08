@@ -1,0 +1,31 @@
+Even though the OneClassSVM approach seems promising in tackling the lack of ground truth data for the city of Volos, we would like to present some findings from the Chicago dataset.
+As mentioned these were retrieved from the city's open data repository and thus we can easily validate our models' performance.
+
+We performed various tests using different algorithms including a convolutional neural network and State of the Art time series classifiers (e.g HIVE-COTE 2.0) from the sktime library, 
+keeping their default parameters and calculated their accuracy, precision and f1 score.
+(cite1: https://arxiv.org/abs/2104.07551
+cite2: https://inria.hal.science/hal-03558165/document)
+
+
+The results can be seen on the table below.
+
+
+
+Precision refers to how close measurements of the same item are to each other. Precision is independent of accuracy.
+
+\begin{table}[]
+\begin{tabular}{lll}
+\hline
+Classifier                 & Accuracy & Precision & F1 \\ \hline
+CNN                        & 0.6411465726452676      &  0.5637965852762988 &0.40970134295449984    \\
+TimeSeriesForestClassifier & 0.6075827647786071      &  0.6098091098091099 &0.5948305571510626\\
+HIVE COTE 2.0              &          &              &                               \\ \hline
+\end{tabular}
+\end{table}
+
+The photos where the are red dots with a shade of black the classification of abandonded buildings is correct while the ones that are green with a shade of black are correctly classified as 
+not abandonded. The single dots without a different shade represent the missclassifed buildings.
+
+
+However, there are some limitations that are worth mentioning.The Chicago dataset doesn't include polygon shapes for the individual buildings (valued for longtitude and latidude on x and y axis) but only points with the coordinates. This hinders the calculation of accurate time series for each building since we can only calculate only part of it. A possible solution to this is to infer the building polygon and do the calculations for it which is a demanding process.
+Another problem with the use of more advanced models is that they are resource intensive and can not be easily loaded on free cloud based hosting platforms (e.g streamlit) .
